@@ -19,11 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('/leituras', function () {
-
-    $readings = Reading::all();
-    foreach ($readings as $reading) {
-        echo "$reading->caudal_acumulado $reading->temperatura ºC<br>";
-    }
+    $readings = Reading::where('user_id', Auth::user()->id)->get();
+    return view('leituras.index', ['readings' => $readings]);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
